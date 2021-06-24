@@ -28,7 +28,7 @@ pipeline {
     timeout (time: 16, unit: 'HOURS')
     timestamps()
     skipDefaultCheckout()
-    disableConcurrentBuilds()
+//    disableConcurrentBuilds()
   }
   environment {
     YETUS_RELEASE = '0.12.0'
