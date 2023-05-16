@@ -256,7 +256,7 @@ public class ParseFilter {
       return (Filter) m.invoke(null,filterArguments);
     } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
         IllegalAccessException e) {
-      LOG.error(e.getMessage(), e);
+      LOG.debug(e.getMessage(), e);
     }
     throw new IllegalArgumentException("Incorrect filter string " +
         new String(filterStringAsByteArray, StandardCharsets.UTF_8));
