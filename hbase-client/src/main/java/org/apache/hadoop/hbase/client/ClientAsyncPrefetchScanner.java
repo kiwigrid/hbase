@@ -38,6 +38,8 @@ import org.apache.hadoop.hbase.TableName;
 import org.apache.yetus.audience.InterfaceAudience;
 import org.apache.hadoop.hbase.ipc.RpcControllerFactory;
 import org.apache.hadoop.hbase.util.Threads;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ClientAsyncPrefetchScanner implements async scanner behaviour.
@@ -52,6 +54,7 @@ import org.apache.hadoop.hbase.util.Threads;
 @InterfaceAudience.Private
 public class ClientAsyncPrefetchScanner extends ClientSimpleScanner {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ClientAsyncPrefetchScanner.class);
   private long maxCacheSize;
   private AtomicLong cacheSizeInBytes;
   // exception queue (from prefetch to main scan execution)
@@ -145,7 +148,7 @@ public class ClientAsyncPrefetchScanner extends ClientSimpleScanner {
     // Rethrow the exception so the application can handle it.
     while (!exceptionsQueue.isEmpty()) {
       Exception first = exceptionsQueue.peek();
-      first.printStackTrace();
+      LOG.error(first.getMessage(), first);
       if (first instanceof IOException) {
         throw (IOException) first;
       }

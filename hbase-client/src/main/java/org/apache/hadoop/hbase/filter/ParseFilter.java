@@ -254,14 +254,9 @@ public class ParseFilter {
       Class<?>[] argTypes = new Class [] {ArrayList.class};
       Method m = c.getDeclaredMethod("createFilterFromArguments", argTypes);
       return (Filter) m.invoke(null,filterArguments);
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (NoSuchMethodException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    } catch (InvocationTargetException e) {
-      e.printStackTrace();
+    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException |
+        IllegalAccessException e) {
+      LOG.error(e.getMessage(), e);
     }
     throw new IllegalArgumentException("Incorrect filter string " +
         new String(filterStringAsByteArray, StandardCharsets.UTF_8));
